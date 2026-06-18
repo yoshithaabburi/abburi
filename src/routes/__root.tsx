@@ -81,9 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "I turn ideas into experiences. Personal portfolio of Yoshitha Abburi — building products at the intersection of code, design, and AI." },
       { name: "author", content: "Yoshitha Abburi" },
       { property: "og:title", content: "Yoshitha Abburi — Creator. Developer. Designer." },
-      { property: "og:description", content: "I turn ideas into experiences." },
+      { property: "og:description", content: "I turn ideas into experiences. Personal portfolio of Yoshitha Abburi — building products at the intersection of code, design, and AI." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Yoshitha Abburi — Creator. Developer. Designer." },
+      { name: "twitter:description", content: "I turn ideas into experiences. Personal portfolio of Yoshitha Abburi — building products at the intersection of code, design, and AI." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/35b97d6b-a058-4649-99d4-3493a2568f01" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/35b97d6b-a058-4649-99d4-3493a2568f01" },
     ],
     links: [
       {
