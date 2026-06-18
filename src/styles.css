@@ -63,25 +63,32 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  /* Dark luxury purple neon */
+  --background: oklch(0.13 0.03 295);
+  --foreground: oklch(0.97 0.01 300);
+  --card: oklch(0.18 0.04 295 / 0.5);
+  --card-foreground: oklch(0.97 0.01 300);
+  --popover: oklch(0.18 0.04 295);
+  --popover-foreground: oklch(0.97 0.01 300);
+  --primary: oklch(0.68 0.27 305);
+  --primary-foreground: oklch(0.1 0.02 295);
+  --primary-glow: oklch(0.78 0.25 315);
+  --secondary: oklch(0.22 0.05 295);
+  --secondary-foreground: oklch(0.97 0.01 300);
+  --muted: oklch(0.2 0.04 295);
+  --muted-foreground: oklch(0.7 0.04 300);
+  --accent: oklch(0.65 0.3 330);
+  --accent-foreground: oklch(0.1 0.02 295);
+  --destructive: oklch(0.6 0.25 25);
+  --destructive-foreground: oklch(0.97 0.01 300);
+  --border: oklch(0.97 0.05 305 / 0.12);
+  --input: oklch(0.97 0.05 305 / 0.15);
+  --ring: oklch(0.68 0.27 305);
+  --glass: oklch(0.18 0.04 295 / 0.35);
+  --gradient-primary: linear-gradient(135deg, oklch(0.68 0.27 305), oklch(0.65 0.3 330));
+  --gradient-hero: radial-gradient(ellipse at center, oklch(0.3 0.15 305 / 0.6), transparent 70%);
+  --shadow-neon: 0 0 40px oklch(0.68 0.27 305 / 0.5), 0 0 80px oklch(0.65 0.3 330 / 0.25);
+  --shadow-glow: 0 8px 32px oklch(0.68 0.27 305 / 0.35);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +147,69 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.35 0.2 305 / 0.45), transparent),
+      radial-gradient(ellipse 60% 50% at 90% 80%, oklch(0.4 0.25 330 / 0.3), transparent),
+      radial-gradient(ellipse 60% 50% at 10% 60%, oklch(0.35 0.2 280 / 0.3), transparent);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  h1, h2, h3 { font-family: "Syne", "Space Grotesk", sans-serif; letter-spacing: -0.02em; }
+}
+
+@utility glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid oklch(1 0 0 / 0.08);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.06), 0 8px 32px oklch(0 0 0 / 0.4);
+}
+
+@utility text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility neon-glow {
+  box-shadow: var(--shadow-neon);
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(oklch(0.68 0.27 305 / 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.68 0.27 305 / 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; filter: blur(60px); }
+  50% { opacity: 1; filter: blur(80px); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@utility animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+@utility animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+@utility animate-marquee {
+  animation: marquee 30s linear infinite;
   }
 }
