@@ -265,10 +265,11 @@ function Section({ id, kicker, title, children }: { id: string; kicker: string; 
 
 function Vault() {
   const projects = [
-    { tag: "AI · WEB", title: "Neon Lex", desc: "Realtime AI writing studio with collaborative agents.", color: "from-primary/30 to-accent/10" },
-    { tag: "PRODUCT", title: "Halo Health", desc: "Wellness platform connecting users with verified coaches.", color: "from-accent/30 to-primary/10" },
-    { tag: "DESIGN", title: "Glasswire UI", desc: "Open-source glassmorphism component library.", color: "from-primary/40 to-primary/5" },
-    { tag: "EXPERIMENT", title: "Echo Atlas", desc: "Voice-driven knowledge graph for research teams.", color: "from-accent/20 to-primary/20" },
+    { tag: "LOGIC · SYSTEM", title: "Digi Logic", desc: "A digital logic playground for simulating and visualizing circuit behavior in real time.", color: "from-primary/30 to-accent/10" },
+    { tag: "AI · FINTECH", title: "Fake UPI Detector", desc: "ML-powered scanner that flags spoofed UPI IDs and fraudulent payment screenshots before money moves.", color: "from-accent/30 to-primary/10" },
+    { tag: "NLP · TRUST", title: "Fake Review Detector", desc: "NLP model that scores product reviews for authenticity and surfaces coordinated fake-review patterns.", color: "from-primary/40 to-primary/5" },
+    { tag: "IOT · AGRI", title: "Agri Drone Sprayer", desc: "IoT-documented drone system for precision pesticide spraying with field telemetry and crop logs.", color: "from-accent/20 to-primary/20" },
+    { tag: "SAFETY · MOBILE", title: "Rakshana", desc: "Women safety app with one-tap SOS, live location sharing, and trusted-contact alert network.", color: "from-primary/30 to-accent/20" },
   ];
   return (
     <Section id="vault" kicker="02 / PROJECT VAULT" title="Selected builds from the lab.">
@@ -409,13 +410,13 @@ function Contact() {
             <p className="mt-4 max-w-md text-muted-foreground">
               Collaborations, product builds, design partnerships, or just a good conversation about the future of the web.
             </p>
-            <a href="mailto:hello@yoshitha.dev" className="mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)]">
-              hello@yoshitha.dev →
+            <a href="mailto:yoshithaabburi6666@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)]">
+              yoshithaabburi6666@gmail.com →
             </a>
           </div>
           <div className="space-y-3 font-mono text-sm">
             {[
-              { k: "EMAIL", v: "hello@yoshitha.dev" },
+              { k: "EMAIL", v: "yoshithaabburi6666@gmail.com" },
               { k: "LINKEDIN", v: "/in/yoshitha-abburi" },
               { k: "GITHUB", v: "@yoshitha" },
               { k: "TWITTER", v: "@yoshithabuilds" },
