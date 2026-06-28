@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import heroCharacter from "../assets/hero-character.png";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { listProjects, submitContact, chatWithNova, type ProjectRow } from "@/lib/portfolio.functions";
+import { listProjects, submitContact, chatWithDev, type ProjectRow } from "@/lib/portfolio.functions";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
@@ -407,7 +407,7 @@ function Contact() {
   const mutation = useMutation({
     mutationFn: (data: { name: string; email: string; message: string }) => send({ data }),
     onSuccess: () => {
-      toast.success("Signal received. NOVA will route this to Yoshitha.");
+      toast.success("Signal received. DEV will route this to Yoshitha.");
       setForm({ name: "", email: "", message: "" });
     },
     onError: (e: unknown) => {
@@ -509,13 +509,13 @@ function Footer() {
 
 type ChatMsg = { role: "user" | "assistant"; content: string };
 
-function NovaChat() {
+function DevChat() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<ChatMsg[]>([
-    { role: "assistant", content: "NOVA online. Ask me anything about Yoshitha — projects, stack, hiring, collaborations." },
+    { role: "assistant", content: "DEV online. Ask me anything about Yoshitha — projects, stack, hiring, collaborations." },
   ]);
-  const chat = useServerFn(chatWithNova);
+  const chat = useServerFn(chatWithDev);
   const scrollRef = useRef<HTMLDivElement>(null);
   const mutation = useMutation({
     mutationFn: (msgs: ChatMsg[]) => chat({ data: { messages: msgs } }),
@@ -547,10 +547,10 @@ function NovaChat() {
     <>
       <button
         onClick={() => setOpen((o) => !o)}
-        aria-label="Open NOVA assistant"
+        aria-label="Open DEV assistant"
         className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full border border-primary/50 bg-background/80 font-mono text-xs text-primary shadow-[0_0_30px_var(--primary)] backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
       >
-        {open ? "×" : "NOVA"}
+        {open ? "×" : "DEV"}
       </button>
       {open && (
         <motion.div
@@ -561,7 +561,7 @@ function NovaChat() {
           <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
-              <span className="font-mono text-xs tracking-[0.25em] text-primary">NOVA · ONLINE</span>
+              <span className="font-mono text-xs tracking-[0.25em] text-primary">DEV · ONLINE</span>
             </div>
             <span className="font-mono text-[10px] text-muted-foreground">AI</span>
           </div>
@@ -579,7 +579,7 @@ function NovaChat() {
               </div>
             ))}
             {mutation.isPending && (
-              <div className="font-mono text-[10px] text-primary">NOVA is thinking…</div>
+              <div className="font-mono text-[10px] text-primary">DEV is thinking…</div>
             )}
           </div>
           <div className="border-t border-primary/20 p-3">
@@ -624,7 +624,7 @@ function Index() {
         <Contact />
       </main>
       <Footer />
-      <NovaChat />
+      <DevChat />
     </div>
   );
 }
