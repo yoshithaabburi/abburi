@@ -2,6 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import heroCharacter from "../assets/hero-character.png";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { listProjects, submitContact, chatWithNova, type ProjectRow } from "@/lib/portfolio.functions";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -264,16 +268,19 @@ function Section({ id, kicker, title, children }: { id: string; kicker: string; 
 }
 
 function Vault() {
-  const projects = [
-    { tag: "LOGIC · SYSTEM", title: "Digi Logic", desc: "A digital logic playground for simulating and visualizing circuit behavior in real time.", color: "from-primary/30 to-accent/10" },
-    { tag: "AI · FINTECH", title: "Fake UPI Detector", desc: "ML-powered scanner that flags spoofed UPI IDs and fraudulent payment screenshots before money moves.", color: "from-accent/30 to-primary/10" },
-    { tag: "NLP · TRUST", title: "Fake Review Detector", desc: "NLP model that scores product reviews for authenticity and surfaces coordinated fake-review patterns.", color: "from-primary/40 to-primary/5" },
-    { tag: "IOT · AGRI", title: "Agri Drone Sprayer", desc: "IoT-documented drone system for precision pesticide spraying with field telemetry and crop logs.", color: "from-accent/20 to-primary/20" },
-    { tag: "SAFETY · MOBILE", title: "Rakshana", desc: "Women safety app with one-tap SOS, live location sharing, and trusted-contact alert network.", color: "from-primary/30 to-accent/20" },
-  ];
+  const fetchProjects = useServerFn(listProjects);
+  const { data: projects = [], isLoading } = useQuery<ProjectRow[]>({
+    queryKey: ["projects"],
+    queryFn: () => fetchProjects(),
+  });
   return (
     <Section id="vault" kicker="02 / PROJECT VAULT" title="Selected builds from the lab.">
       <div className="grid gap-5 md:grid-cols-2">
+        {isLoading && (
+          <div className="col-span-full font-mono text-xs text-muted-foreground">
+            // fetching project vault from command center…
+          </div>
+        )}
         {projects.map((p, i) => (
           <motion.a
             href="#" key={p.title}
@@ -282,11 +289,11 @@ function Vault() {
             whileHover={{ y: -6 }}
             className="group glass relative overflow-hidden rounded-2xl p-6"
           >
-            <div className={`absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${p.color} opacity-60 blur-3xl transition group-hover:opacity-100`} />
+            <div className={`absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${p.accent} opacity-60 blur-3xl transition group-hover:opacity-100`} />
             <div className="relative">
               <div className="font-mono text-[10px] tracking-[0.25em] text-primary">{p.tag}</div>
               <h3 className="mt-3 font-[Syne] text-3xl font-bold">{p.title}</h3>
-              <p className="mt-3 max-w-md text-sm text-muted-foreground">{p.desc}</p>
+              <p className="mt-3 max-w-md text-sm text-muted-foreground">{p.description}</p>
               <div className="mt-8 flex items-center justify-between font-mono text-xs">
                 <span className="text-muted-foreground">0{i + 1} / 0{projects.length}</span>
                 <span className="text-primary transition group-hover:translate-x-1">view module →</span>
@@ -395,6 +402,18 @@ function FutureMissions() {
 }
 
 function Contact() {
+  const send = useServerFn(submitContact);
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const mutation = useMutation({
+    mutationFn: (data: { name: string; email: string; message: string }) => send({ data }),
+    onSuccess: () => {
+      toast.success("Signal received. NOVA will route this to Yoshitha.");
+      setForm({ name: "", email: "", message: "" });
+    },
+    onError: (e: unknown) => {
+      toast.error(e instanceof Error ? e.message : "Transmission failed.");
+    },
+  });
   return (
     <Section id="contact" kicker="06 / CONTACT TERMINAL" title="Open a channel.">
       <div className="glass relative overflow-hidden rounded-2xl p-8 md:p-12">
@@ -410,9 +429,49 @@ function Contact() {
             <p className="mt-4 max-w-md text-muted-foreground">
               Collaborations, product builds, design partnerships, or just a good conversation about the future of the web.
             </p>
-            <a href="mailto:yoshithaabburi6666@gmail.com" className="mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)]">
-              yoshithaabburi6666@gmail.com →
-            </a>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                mutation.mutate(form);
+              }}
+              className="mt-8 space-y-3"
+            >
+              <div className="grid gap-3 sm:grid-cols-2">
+                <input
+                  required minLength={1} maxLength={120}
+                  placeholder="callsign / name"
+                  value={form.name}
+                  onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                  className="glass w-full rounded-lg bg-transparent px-4 py-3 font-mono text-sm outline-none placeholder:text-muted-foreground focus:border-primary"
+                />
+                <input
+                  required type="email" maxLength={255}
+                  placeholder="frequency / email"
+                  value={form.email}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                  className="glass w-full rounded-lg bg-transparent px-4 py-3 font-mono text-sm outline-none placeholder:text-muted-foreground focus:border-primary"
+                />
+              </div>
+              <textarea
+                required minLength={1} maxLength={4000} rows={4}
+                placeholder="transmission…"
+                value={form.message}
+                onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                className="glass w-full resize-none rounded-lg bg-transparent px-4 py-3 font-mono text-sm outline-none placeholder:text-muted-foreground focus:border-primary"
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="submit"
+                  disabled={mutation.isPending}
+                  className="inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)] disabled:opacity-60"
+                >
+                  {mutation.isPending ? "transmitting…" : "transmit message →"}
+                </button>
+                <a href="mailto:yoshithaabburi6666@gmail.com" className="font-mono text-xs text-muted-foreground hover:text-primary">
+                  or email: yoshithaabburi6666@gmail.com
+                </a>
+              </div>
+            </form>
           </div>
           <div className="space-y-3 font-mono text-sm">
             {[
@@ -448,6 +507,106 @@ function Footer() {
   );
 }
 
+type ChatMsg = { role: "user" | "assistant"; content: string };
+
+function NovaChat() {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    { role: "assistant", content: "NOVA online. Ask me anything about Yoshitha — projects, stack, hiring, collaborations." },
+  ]);
+  const chat = useServerFn(chatWithNova);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const mutation = useMutation({
+    mutationFn: (msgs: ChatMsg[]) => chat({ data: { messages: msgs } }),
+    onSuccess: (res) => {
+      setMessages((m) => [...m, { role: "assistant", content: res.text }]);
+    },
+    onError: (e) => {
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: `Signal lost: ${e instanceof Error ? e.message : "unknown error"}` },
+      ]);
+    },
+  });
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, open]);
+
+  const send = () => {
+    const text = input.trim();
+    if (!text || mutation.isPending) return;
+    const next: ChatMsg[] = [...messages, { role: "user", content: text }];
+    setMessages(next);
+    setInput("");
+    mutation.mutate(next.filter((m) => m.role === "user" || m.role === "assistant").slice(-12));
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-label="Open NOVA assistant"
+        className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full border border-primary/50 bg-background/80 font-mono text-xs text-primary shadow-[0_0_30px_var(--primary)] backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
+      >
+        {open ? "×" : "NOVA"}
+      </button>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="fixed bottom-24 right-6 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-primary/30 bg-background/95 shadow-[0_0_40px_var(--primary)] backdrop-blur-xl"
+        >
+          <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
+              <span className="font-mono text-xs tracking-[0.25em] text-primary">NOVA · ONLINE</span>
+            </div>
+            <span className="font-mono text-[10px] text-muted-foreground">AI</span>
+          </div>
+          <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                  m.role === "user"
+                    ? "ml-auto bg-primary/20 text-foreground"
+                    : "border border-primary/20 bg-background/60 text-foreground"
+                }`}
+              >
+                {m.content}
+              </div>
+            ))}
+            {mutation.isPending && (
+              <div className="font-mono text-[10px] text-primary">NOVA is thinking…</div>
+            )}
+          </div>
+          <div className="border-t border-primary/20 p-3">
+            <div className="flex items-center gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+                maxLength={500}
+                placeholder="ask about Yoshitha…"
+                className="flex-1 rounded-md border border-primary/20 bg-transparent px-3 py-2 font-mono text-xs outline-none focus:border-primary"
+              />
+              <button
+                onClick={send}
+                disabled={mutation.isPending || !input.trim()}
+                className="rounded-md bg-primary px-3 py-2 font-mono text-xs text-primary-foreground transition disabled:opacity-50"
+              >
+                send
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </>
+  );
+}
+
 function Index() {
   const [loading, setLoading] = useState(true);
   return (
@@ -465,6 +624,7 @@ function Index() {
         <Contact />
       </main>
       <Footer />
+      <NovaChat />
     </div>
   );
 }
