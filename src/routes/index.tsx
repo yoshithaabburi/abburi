@@ -507,6 +507,106 @@ function Footer() {
   );
 }
 
+type ChatMsg = { role: "user" | "assistant"; content: string };
+
+function NovaChat() {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<ChatMsg[]>([
+    { role: "assistant", content: "NOVA online. Ask me anything about Yoshitha — projects, stack, hiring, collaborations." },
+  ]);
+  const chat = useServerFn(chatWithNova);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const mutation = useMutation({
+    mutationFn: (msgs: ChatMsg[]) => chat({ data: { messages: msgs } }),
+    onSuccess: (res) => {
+      setMessages((m) => [...m, { role: "assistant", content: res.text }]);
+    },
+    onError: (e) => {
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: `Signal lost: ${e instanceof Error ? e.message : "unknown error"}` },
+      ]);
+    },
+  });
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, open]);
+
+  const send = () => {
+    const text = input.trim();
+    if (!text || mutation.isPending) return;
+    const next: ChatMsg[] = [...messages, { role: "user", content: text }];
+    setMessages(next);
+    setInput("");
+    mutation.mutate(next.filter((m) => m.role === "user" || m.role === "assistant").slice(-12));
+  };
+
+  return (
+    <>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-label="Open NOVA assistant"
+        className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full border border-primary/50 bg-background/80 font-mono text-xs text-primary shadow-[0_0_30px_var(--primary)] backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
+      >
+        {open ? "×" : "NOVA"}
+      </button>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="fixed bottom-24 right-6 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-primary/30 bg-background/95 shadow-[0_0_40px_var(--primary)] backdrop-blur-xl"
+        >
+          <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
+              <span className="font-mono text-xs tracking-[0.25em] text-primary">NOVA · ONLINE</span>
+            </div>
+            <span className="font-mono text-[10px] text-muted-foreground">AI</span>
+          </div>
+          <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            {messages.map((m, i) => (
+              <div
+                key={i}
+                className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                  m.role === "user"
+                    ? "ml-auto bg-primary/20 text-foreground"
+                    : "border border-primary/20 bg-background/60 text-foreground"
+                }`}
+              >
+                {m.content}
+              </div>
+            ))}
+            {mutation.isPending && (
+              <div className="font-mono text-[10px] text-primary">NOVA is thinking…</div>
+            )}
+          </div>
+          <div className="border-t border-primary/20 p-3">
+            <div className="flex items-center gap-2">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") send(); }}
+                maxLength={500}
+                placeholder="ask about Yoshitha…"
+                className="flex-1 rounded-md border border-primary/20 bg-transparent px-3 py-2 font-mono text-xs outline-none focus:border-primary"
+              />
+              <button
+                onClick={send}
+                disabled={mutation.isPending || !input.trim()}
+                className="rounded-md bg-primary px-3 py-2 font-mono text-xs text-primary-foreground transition disabled:opacity-50"
+              >
+                send
+              </button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </>
+  );
+}
+
 function Index() {
   const [loading, setLoading] = useState(true);
   return (
@@ -524,6 +624,7 @@ function Index() {
         <Contact />
       </main>
       <Footer />
+      <NovaChat />
     </div>
   );
 }
