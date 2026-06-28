@@ -268,16 +268,19 @@ function Section({ id, kicker, title, children }: { id: string; kicker: string; 
 }
 
 function Vault() {
-  const projects = [
-    { tag: "LOGIC · SYSTEM", title: "Digi Logic", desc: "A digital logic playground for simulating and visualizing circuit behavior in real time.", color: "from-primary/30 to-accent/10" },
-    { tag: "AI · FINTECH", title: "Fake UPI Detector", desc: "ML-powered scanner that flags spoofed UPI IDs and fraudulent payment screenshots before money moves.", color: "from-accent/30 to-primary/10" },
-    { tag: "NLP · TRUST", title: "Fake Review Detector", desc: "NLP model that scores product reviews for authenticity and surfaces coordinated fake-review patterns.", color: "from-primary/40 to-primary/5" },
-    { tag: "IOT · AGRI", title: "Agri Drone Sprayer", desc: "IoT-documented drone system for precision pesticide spraying with field telemetry and crop logs.", color: "from-accent/20 to-primary/20" },
-    { tag: "SAFETY · MOBILE", title: "Rakshana", desc: "Women safety app with one-tap SOS, live location sharing, and trusted-contact alert network.", color: "from-primary/30 to-accent/20" },
-  ];
+  const fetchProjects = useServerFn(listProjects);
+  const { data: projects = [], isLoading } = useQuery<ProjectRow[]>({
+    queryKey: ["projects"],
+    queryFn: () => fetchProjects(),
+  });
   return (
     <Section id="vault" kicker="02 / PROJECT VAULT" title="Selected builds from the lab.">
       <div className="grid gap-5 md:grid-cols-2">
+        {isLoading && (
+          <div className="col-span-full font-mono text-xs text-muted-foreground">
+            // fetching project vault from command center…
+          </div>
+        )}
         {projects.map((p, i) => (
           <motion.a
             href="#" key={p.title}
@@ -286,11 +289,11 @@ function Vault() {
             whileHover={{ y: -6 }}
             className="group glass relative overflow-hidden rounded-2xl p-6"
           >
-            <div className={`absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${p.color} opacity-60 blur-3xl transition group-hover:opacity-100`} />
+            <div className={`absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${p.accent} opacity-60 blur-3xl transition group-hover:opacity-100`} />
             <div className="relative">
               <div className="font-mono text-[10px] tracking-[0.25em] text-primary">{p.tag}</div>
               <h3 className="mt-3 font-[Syne] text-3xl font-bold">{p.title}</h3>
-              <p className="mt-3 max-w-md text-sm text-muted-foreground">{p.desc}</p>
+              <p className="mt-3 max-w-md text-sm text-muted-foreground">{p.description}</p>
               <div className="mt-8 flex items-center justify-between font-mono text-xs">
                 <span className="text-muted-foreground">0{i + 1} / 0{projects.length}</span>
                 <span className="text-primary transition group-hover:translate-x-1">view module →</span>
