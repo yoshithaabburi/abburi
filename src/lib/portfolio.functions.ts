@@ -83,10 +83,30 @@ export const chatWithDev = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const key = process.env.LOVABLE_API_KEY;
     if (!key) throw new Error("AI is not configured");
+
+    // Fetch live projects from the database so DEV answers from real data.
+    const supabase = serverPublishableClient();
+    const { data: projects, error: projectsError } = await supabase
+      .from("projects")
+      .select("tag, title, description")
+      .order("order_index", { ascending: true });
+    if (projectsError) throw new Error(projectsError.message);
+
+    const projectsBlock = (projects ?? [])
+      .map((p, i) => `${i + 1}. [${p.tag}] ${p.title} — ${p.description}`)
+      .join("\n");
+
+    const systemPrompt = `${SYSTEM_PROMPT}
+
+Live project database (source of truth — use these exact titles and details when answering):
+${projectsBlock || "(no projects found)"}
+
+If the user asks about a project not in this list, say it is not in the current project registry and offer to connect them via the Contact Terminal.`;
+
     const gateway = createLovableAiGatewayProvider(key);
     const { text } = await generateText({
       model: gateway("google/gemini-3-flash-preview"),
-      system: SYSTEM_PROMPT,
+      system: systemPrompt,
       messages: data.messages,
     });
     return { text };
