@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { Linkedin, Github, Mail, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroCharacter from "../assets/hero-character.png";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -477,14 +478,16 @@ function Contact() {
           </div>
           <div className="space-y-3 font-mono text-xs sm:text-sm">
             {[
-              { k: "EMAIL", v: "yoshithaabburi6666@gmail.com" },
-              { k: "LINKEDIN", v: "/in/yoshitha-abburi" },
-              { k: "GITHUB", v: "@yoshitha" },
-              { k: "TWITTER", v: "@yoshithabuilds" },
-              { k: "DRIBBBLE", v: "/yoshitha" },
+              { k: "EMAIL", v: "yoshithaabburi6666@gmail.com", href: "mailto:yoshithaabburi6666@gmail.com", icon: Mail },
+              { k: "PHONE", v: "+91 8019324776", href: "tel:8019324776", icon: Phone },
+              { k: "LINKEDIN", v: "linkedin.com/in/yoshithaabburi", href: "https://www.linkedin.com/in/yoshithaabburi", icon: Linkedin },
+              { k: "GITHUB", v: "github.com/yoshithaabburi", href: "https://github.com/yoshithaabburi", icon: Github },
             ].map((r) => (
-              <a key={r.k} href="#" className="glass flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
-                <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
+              <a key={r.k} href={r.href} target={r.href.startsWith("http") ? "_blank" : undefined} rel={r.href.startsWith("http") ? "noopener noreferrer" : undefined} className="glass group flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
+                <span className="flex items-center gap-2.5">
+                  <r.icon size={16} className="text-muted-foreground transition group-hover:text-primary" />
+                  <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
+                </span>
                 <span className="min-w-0 truncate text-right">{r.v}</span>
               </a>
             ))}
@@ -496,13 +499,24 @@ function Contact() {
 }
 
 function Footer() {
+  const socials = [
+    { icon: Linkedin, href: "https://www.linkedin.com/in/yoshithaabburi", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/yoshithaabburi", label: "GitHub" },
+  ];
   return (
     <footer className="border-t border-primary/10 px-4 py-8 sm:px-6">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 font-mono text-[10px] tracking-widest text-muted-foreground md:flex-row">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 font-mono text-[10px] tracking-widest text-muted-foreground md:flex-row">
         <div>© {new Date().getFullYear()} YOSHITHA.ABBURI · ALL SIGNALS RESERVED</div>
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-          SYSTEM STATUS: ONLINE
+        <div className="flex items-center gap-4">
+          {socials.map((s) => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="grid h-8 w-8 place-items-center rounded-full border border-primary/30 text-muted-foreground transition hover:border-primary hover:text-primary hover:shadow-[0_0_12px_var(--primary)]">
+              <s.icon size={16} />
+            </a>
+          ))}
+          <div className="flex items-center gap-2 pl-2">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+            SYSTEM STATUS: ONLINE
+          </div>
         </div>
       </div>
     </footer>
