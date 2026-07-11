@@ -103,19 +103,19 @@ function Loader({ done }: { done: () => void }) {
 
 function Nav() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+    <header className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
       <a href="#mission" className="flex items-center gap-2">
         <span className="grid h-8 w-8 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
         <span className="hidden font-mono text-xs tracking-widest text-muted-foreground sm:block">YOSHITHA.SYS</span>
       </a>
-      <nav className="glass hidden items-center gap-1 rounded-full px-2 py-1.5 md:flex">
+      <nav className="glass hidden items-center gap-1 rounded-full px-2 py-1.5 lg:flex">
         {NAV.map((n) => (
           <a key={n.id} href={`#${n.id}`} className="rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground transition hover:bg-primary/15 hover:text-foreground">
             {n.label}
           </a>
         ))}
       </nav>
-      <a href="#contact" className="rounded-full border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)]">
+      <a href="#contact" className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)] sm:px-4 sm:text-xs">
         Connect →
       </a>
     </header>
@@ -157,10 +157,10 @@ function Hero() {
   };
 
   return (
-    <section id="mission" ref={ref} className="relative min-h-screen overflow-hidden pt-28">
+    <section id="mission" ref={ref} className="relative min-h-screen overflow-hidden pt-24 sm:pt-28">
       <div aria-hidden className="grid-bg absolute inset-0 opacity-40" />
       <div aria-hidden className="absolute inset-x-0 top-0 h-[60vh] bg-[var(--gradient-hero)]" />
-      <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-6">
+      <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-6">
         <motion.div style={{ opacity }} className="flex flex-col justify-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6 flex items-center gap-3">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
@@ -168,36 +168,38 @@ function Hero() {
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-[Syne] text-6xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-[5.5rem]"
+            className="font-[Syne] text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]"
           >
             YOSHITHA
             <br />
             <span className="text-gradient">ABBURI</span>
           </motion.h1>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm uppercase tracking-[0.25em] text-muted-foreground">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs uppercase tracking-[0.2em] text-muted-foreground sm:gap-x-4 sm:text-sm sm:tracking-[0.25em]">
             <span>Developer</span><span className="text-primary">◆</span>
             <span>Designer</span><span className="text-primary">◆</span>
             <span>Creator</span>
           </motion.div>
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-8 max-w-lg text-lg text-muted-foreground">
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-6 max-w-lg text-base text-muted-foreground sm:mt-8 sm:text-lg">
             Creating digital experiences where{" "}
             <span className="text-foreground">technology meets imagination</span>.
             I build products, design interfaces, and experiment with AI from my own command center.
           </motion.p>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-6 glass inline-flex w-fit items-center gap-3 rounded-md px-4 py-2.5">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1 }} className="mt-6 glass inline-flex w-full max-w-full items-center gap-3 overflow-hidden rounded-md px-4 py-2.5 sm:w-fit">
             <span className="font-mono text-xs text-muted-foreground">$</span>
-            <TypingLine text="boot --identity yoshitha.abburi --mode=creator" />
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <TypingLine text="boot --identity yoshitha.abburi --mode=creator" />
+            </div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="mt-10 flex flex-wrap gap-4">
-            <a href="#vault" className="group relative overflow-hidden rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_50px_var(--primary)]">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
+            <a href="#vault" className="group relative overflow-hidden rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_50px_var(--primary)] sm:px-7 sm:py-3.5">
               <span className="relative z-10">Enter the Vault</span>
             </a>
-            <a href="#contact" className="rounded-full border border-primary/40 px-7 py-3.5 text-sm font-semibold text-foreground transition hover:bg-primary/10">
+            <a href="#contact" className="rounded-full border border-primary/40 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-primary/10 sm:px-7 sm:py-3.5">
               Open Terminal
             </a>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="mt-12 grid max-w-md grid-cols-3 gap-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="mt-10 grid max-w-md grid-cols-3 gap-3 sm:mt-12 sm:gap-4">
             {[
               { k: "Projects", v: "20+" },
               { k: "Stacks", v: "12" },
@@ -225,7 +227,7 @@ function Hero() {
                 src={heroCharacter}
                 alt="Yoshitha Abburi — futuristic developer command center"
                 width={1024} height={1024}
-                className="h-auto w-full max-w-[520px] rounded-[1.5rem] object-cover"
+                className="mx-auto h-auto w-full max-w-[380px] rounded-[1.5rem] object-cover sm:max-w-[460px] lg:max-w-[520px]"
               />
               <div aria-hidden className="pointer-events-none absolute inset-3 rounded-[1.5rem] ring-1 ring-inset ring-primary/30" />
             </div>
@@ -257,12 +259,12 @@ function Hero() {
 
 function Section({ id, kicker, title, children }: { id: string; kicker: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="relative mx-auto max-w-7xl px-6 py-28">
+    <section id={id} className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:py-28">
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }}>
         <div className="mb-3 font-mono text-xs tracking-[0.3em] text-primary">// {kicker}</div>
-        <h2 className="max-w-3xl font-[Syne] text-4xl font-bold leading-tight md:text-6xl">{title}</h2>
+        <h2 className="max-w-3xl font-[Syne] text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">{title}</h2>
       </motion.div>
-      <div className="mt-14">{children}</div>
+      <div className="mt-10 sm:mt-14">{children}</div>
     </section>
   );
 }
@@ -416,12 +418,12 @@ function Contact() {
   });
   return (
     <Section id="contact" kicker="06 / CONTACT TERMINAL" title="Open a channel.">
-      <div className="glass relative overflow-hidden rounded-2xl p-8 md:p-12">
+      <div className="glass relative overflow-hidden rounded-2xl p-5 sm:p-8 md:p-12">
         <div aria-hidden className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-primary/30 blur-3xl" />
-        <div className="relative grid gap-10 md:grid-cols-[1.2fr_1fr]">
+        <div className="relative grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-10">
           <div>
             <div className="font-mono text-xs text-primary">{">"} initiating handshake…</div>
-            <h3 className="mt-4 font-[Syne] text-3xl font-bold leading-tight md:text-4xl">
+            <h3 className="mt-4 font-[Syne] text-2xl font-bold leading-tight sm:text-3xl md:text-4xl">
               Got an idea worth shipping?
               <br />
               <span className="text-gradient">Let's build it.</span>
@@ -467,13 +469,13 @@ function Contact() {
                 >
                   {mutation.isPending ? "transmitting…" : "transmit message →"}
                 </button>
-                <a href="mailto:yoshithaabburi6666@gmail.com" className="font-mono text-xs text-muted-foreground hover:text-primary">
+                <a href="mailto:yoshithaabburi6666@gmail.com" className="break-all font-mono text-xs text-muted-foreground hover:text-primary">
                   or email: yoshithaabburi6666@gmail.com
                 </a>
               </div>
             </form>
           </div>
-          <div className="space-y-3 font-mono text-sm">
+          <div className="space-y-3 font-mono text-xs sm:text-sm">
             {[
               { k: "EMAIL", v: "yoshithaabburi6666@gmail.com" },
               { k: "LINKEDIN", v: "/in/yoshitha-abburi" },
@@ -481,9 +483,9 @@ function Contact() {
               { k: "TWITTER", v: "@yoshithabuilds" },
               { k: "DRIBBBLE", v: "/yoshitha" },
             ].map((r) => (
-              <a key={r.k} href="#" className="glass flex items-center justify-between rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
-                <span className="text-xs tracking-widest text-muted-foreground">{r.k}</span>
-                <span>{r.v}</span>
+              <a key={r.k} href="#" className="glass flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
+                <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
+                <span className="min-w-0 truncate text-right">{r.v}</span>
               </a>
             ))}
           </div>
@@ -495,7 +497,7 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="border-t border-primary/10 px-6 py-8">
+    <footer className="border-t border-primary/10 px-4 py-8 sm:px-6">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 font-mono text-[10px] tracking-widest text-muted-foreground md:flex-row">
         <div>© {new Date().getFullYear()} YOSHITHA.ABBURI · ALL SIGNALS RESERVED</div>
         <div className="flex items-center gap-2">
@@ -610,7 +612,7 @@ function DevChat() {
 function Index() {
   const [loading, setLoading] = useState(true);
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       {loading && <Loader done={() => setLoading(false)} />}
       <CustomCursor />
       <Particles />
