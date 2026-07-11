@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { Linkedin, Github, Mail, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroCharacter from "../assets/hero-character.png";
 import { useQuery, useMutation } from "@tanstack/react-query";
