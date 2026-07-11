@@ -478,14 +478,16 @@ function Contact() {
           </div>
           <div className="space-y-3 font-mono text-xs sm:text-sm">
             {[
-              { k: "EMAIL", v: "yoshithaabburi6666@gmail.com" },
-              { k: "LINKEDIN", v: "/in/yoshitha-abburi" },
-              { k: "GITHUB", v: "@yoshitha" },
-              { k: "TWITTER", v: "@yoshithabuilds" },
-              { k: "DRIBBBLE", v: "/yoshitha" },
+              { k: "EMAIL", v: "yoshithaabburi6666@gmail.com", href: "mailto:yoshithaabburi6666@gmail.com", icon: Mail },
+              { k: "PHONE", v: "+91 8019324776", href: "tel:8019324776", icon: Phone },
+              { k: "LINKEDIN", v: "linkedin.com/in/yoshithaabburi", href: "https://www.linkedin.com/in/yoshithaabburi", icon: Linkedin },
+              { k: "GITHUB", v: "github.com/yoshithaabburi", href: "https://github.com/yoshithaabburi", icon: Github },
             ].map((r) => (
-              <a key={r.k} href="#" className="glass flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
-                <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
+              <a key={r.k} href={r.href} target={r.href.startsWith("http") ? "_blank" : undefined} rel={r.href.startsWith("http") ? "noopener noreferrer" : undefined} className="glass group flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
+                <span className="flex items-center gap-2.5">
+                  <r.icon size={16} className="text-muted-foreground transition group-hover:text-primary" />
+                  <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
+                </span>
                 <span className="min-w-0 truncate text-right">{r.v}</span>
               </a>
             ))}
