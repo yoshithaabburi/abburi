@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "yoshitha-portfolio-mcp",
+      "version": "0.1.0",
+      "title": "Yoshitha Abburi Portfolio"
+    },
+    "tools": [
+      {
+        "name": "get_about",
+        "title": "About Yoshitha",
+        "description": "Return Yoshitha Abburi's bio, tagline, skills, and public contact info.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_projects",
+        "title": "List projects",
+        "description": "List all projects in Yoshitha Abburi's portfolio (tag, title, description, accent).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "submit_contact",
+        "title": "Send contact message",
+        "description": "Send a message to Yoshitha through the portfolio's contact terminal. Use for introductions, collaboration or hiring inquiries.",
+        "annotations": {
+          "readOnlyHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120,
+              "description": "Sender's full name."
+            },
+            "email": {
+              "type": "string",
+              "maxLength": 255,
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$",
+              "description": "Sender's email address."
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4000,
+              "description": "Message body (max 4000 chars)."
+            }
+          },
+          "required": [
+            "name",
+            "email",
+            "message"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
