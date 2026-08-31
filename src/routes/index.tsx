@@ -105,10 +105,10 @@ function Loader({ done }: { done: () => void }) {
 
 function Nav() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
-      <a href="#mission" className="flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
-        <span className="hidden font-mono text-xs tracking-widest text-muted-foreground sm:block">YOSHITHA.SYS</span>
+    <header className="fixed left-0 right-0 top-0 z-50 mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3 py-3 sm:px-6 sm:py-5 lg:flex lg:justify-between">
+      <a href="#mission" className="flex min-w-0 items-center gap-2">
+        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
+        <span className="truncate font-mono text-[10px] tracking-widest text-muted-foreground sm:text-xs">YOSHITHA.SYS</span>
       </a>
       <nav className="glass hidden items-center gap-1 rounded-full px-2 py-1.5 lg:flex">
         {NAV.map((n) => (
@@ -120,7 +120,15 @@ function Nav() {
       <a href="#contact" className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)] sm:px-4 sm:text-xs">
         Connect →
       </a>
+      <div className="col-span-2 -mx-3 flex gap-2 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
+        {NAV.map((n) => (
+          <a key={n.id} href={`#${n.id}`} className="glass shrink-0 rounded-full px-3 py-1.5 font-mono text-[10px] tracking-widest whitespace-nowrap text-muted-foreground">
+            {n.label.toUpperCase()}
+          </a>
+        ))}
+      </div>
     </header>
+
   );
 }
 
