@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { Linkedin, Github, Mail, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import heroCharacter from "../assets/hero-character.png";
+import heroCharacter from "../assets/portfolio_image.jpeg.asset.json";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { listProjects, submitContact, chatWithDev, type ProjectRow } from "@/lib/portfolio.functions";
