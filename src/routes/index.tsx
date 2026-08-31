@@ -225,7 +225,7 @@ function Hero() {
             <motion.div className="animate-pulse-glow absolute inset-6 -z-10 rounded-[2rem] bg-primary/40 blur-3xl" />
             <div className="glass animate-float relative overflow-hidden rounded-[2rem] p-3">
               <img
-                src={heroCharacter}
+                src={heroCharacter.url}
                 alt="Yoshitha Abburi — futuristic developer command center"
                 width={1024} height={1024}
                 className="mx-auto h-auto w-full max-w-[380px] rounded-[1.5rem] object-cover sm:max-w-[460px] lg:max-w-[520px]"
