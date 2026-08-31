@@ -171,14 +171,14 @@ function Hero() {
       <div aria-hidden className="grid-bg absolute inset-0 opacity-40" />
       <div aria-hidden className="absolute inset-x-0 top-0 h-[60vh] bg-[var(--gradient-hero)]" />
       <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-6">
-        <motion.div style={{ opacity }} className="flex flex-col justify-center">
+        <motion.div style={{ opacity }} className="flex min-w-0 flex-col justify-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6 flex items-center gap-3">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
             <span className="font-mono text-xs tracking-[0.3em] text-muted-foreground">SYSTEM ONLINE · BENGALURU, IN</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-[Syne] text-[clamp(2.5rem,13vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+            className="font-[Syne] text-[clamp(1.9rem,9.5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]"
           >
             YOSHITHA
             <br />
@@ -228,7 +228,7 @@ function Hero() {
           onMouseMove={onMove}
           onMouseLeave={() => { rx.set(0); ry.set(0); }}
           style={{ y: yChar, perspective: 1200 }}
-          className="relative flex items-center justify-center"
+          className="relative flex min-w-0 items-center justify-center"
         >
           <motion.div style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }} className="relative">
             <motion.div className="animate-pulse-glow absolute inset-6 -z-10 rounded-[2rem] bg-primary/40 blur-3xl" />
