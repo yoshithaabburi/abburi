@@ -93,11 +93,12 @@ function Loader({ done }: { done: () => void }) {
       initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background"
     >
-      <div className="font-mono text-xs tracking-[0.3em] text-primary">INITIALIZING_COMMAND_CENTER</div>
-      <div className="mt-6 h-px w-64 overflow-hidden bg-primary/20">
+      <div className="px-6 text-center font-mono text-[10px] tracking-[0.25em] text-primary sm:text-xs sm:tracking-[0.3em]">INITIALIZING_COMMAND_CENTER</div>
+      <div className="mt-6 h-px w-[70vw] max-w-64 overflow-hidden bg-primary/20">
         <motion.div className="h-full bg-primary shadow-[0_0_20px_var(--primary)]" style={{ width: `${pct}%` }} />
       </div>
-      <div className="mt-3 font-mono text-[10px] text-muted-foreground">{Math.floor(pct)}% · loading subsystems</div>
+      <div className="mt-3 px-6 text-center font-mono text-[10px] text-muted-foreground">{Math.floor(pct)}% · loading subsystems</div>
+
     </motion.div>
   );
 }
