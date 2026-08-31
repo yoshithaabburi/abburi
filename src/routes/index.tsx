@@ -93,21 +93,22 @@ function Loader({ done }: { done: () => void }) {
       initial={{ opacity: 1 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background"
     >
-      <div className="font-mono text-xs tracking-[0.3em] text-primary">INITIALIZING_COMMAND_CENTER</div>
-      <div className="mt-6 h-px w-64 overflow-hidden bg-primary/20">
+      <div className="px-6 text-center font-mono text-[10px] tracking-[0.25em] text-primary sm:text-xs sm:tracking-[0.3em]">INITIALIZING_COMMAND_CENTER</div>
+      <div className="mt-6 h-px w-[70vw] max-w-64 overflow-hidden bg-primary/20">
         <motion.div className="h-full bg-primary shadow-[0_0_20px_var(--primary)]" style={{ width: `${pct}%` }} />
       </div>
-      <div className="mt-3 font-mono text-[10px] text-muted-foreground">{Math.floor(pct)}% · loading subsystems</div>
+      <div className="mt-3 px-6 text-center font-mono text-[10px] text-muted-foreground">{Math.floor(pct)}% · loading subsystems</div>
+
     </motion.div>
   );
 }
 
 function Nav() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5">
-      <a href="#mission" className="flex items-center gap-2">
-        <span className="grid h-8 w-8 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
-        <span className="hidden font-mono text-xs tracking-widest text-muted-foreground sm:block">YOSHITHA.SYS</span>
+    <header className="fixed left-0 right-0 top-0 z-50 mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3 py-3 sm:px-6 sm:py-5 lg:flex lg:justify-between">
+      <a href="#mission" className="flex min-w-0 items-center gap-2">
+        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
+        <span className="truncate font-mono text-[10px] tracking-widest text-muted-foreground sm:text-xs">YOSHITHA.SYS</span>
       </a>
       <nav className="glass hidden items-center gap-1 rounded-full px-2 py-1.5 lg:flex">
         {NAV.map((n) => (
@@ -119,7 +120,15 @@ function Nav() {
       <a href="#contact" className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)] sm:px-4 sm:text-xs">
         Connect →
       </a>
+      <div className="col-span-2 -mx-3 flex gap-2 overflow-x-auto px-3 pb-0.5 [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
+        {NAV.map((n) => (
+          <a key={n.id} href={`#${n.id}`} className="glass shrink-0 rounded-full px-3 py-1.5 font-mono text-[10px] tracking-widest whitespace-nowrap text-muted-foreground">
+            {n.label.toUpperCase()}
+          </a>
+        ))}
+      </div>
     </header>
+
   );
 }
 
@@ -158,18 +167,18 @@ function Hero() {
   };
 
   return (
-    <section id="mission" ref={ref} className="relative min-h-screen overflow-hidden pt-24 sm:pt-28">
+    <section id="mission" ref={ref} className="relative overflow-hidden pb-8 pt-32 sm:pt-28 lg:min-h-screen">
       <div aria-hidden className="grid-bg absolute inset-0 opacity-40" />
       <div aria-hidden className="absolute inset-x-0 top-0 h-[60vh] bg-[var(--gradient-hero)]" />
       <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-6">
-        <motion.div style={{ opacity }} className="flex flex-col justify-center">
+        <motion.div style={{ opacity }} className="flex min-w-0 flex-col justify-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6 flex items-center gap-3">
             <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
             <span className="font-mono text-xs tracking-[0.3em] text-muted-foreground">SYSTEM ONLINE · BENGALURU, IN</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-[Syne] text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]"
+            className="font-[Syne] text-[clamp(1.9rem,9.5vw,3.5rem)] font-extrabold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.5rem]"
           >
             YOSHITHA
             <br />
@@ -180,7 +189,7 @@ function Hero() {
             <span>Designer</span><span className="text-primary">◆</span>
             <span>Creator</span>
           </motion.div>
-          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-6 max-w-lg text-base text-muted-foreground sm:mt-8 sm:text-lg">
+          <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mt-5 max-w-lg text-sm text-muted-foreground sm:mt-8 sm:text-lg">
             Creating digital experiences where{" "}
             <span className="text-foreground">technology meets imagination</span>.
             I build products, design interfaces, and experiment with AI from my own command center.
@@ -192,22 +201,22 @@ function Hero() {
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3 }} className="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
-            <a href="#vault" className="group relative overflow-hidden rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_50px_var(--primary)] sm:px-7 sm:py-3.5">
+            <a href="#vault" className="group relative min-w-[9rem] flex-1 overflow-hidden rounded-full bg-primary px-5 py-3 text-center text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_50px_var(--primary)] sm:px-7 sm:py-3.5">
               <span className="relative z-10">Enter the Vault</span>
             </a>
-            <a href="#contact" className="rounded-full border border-primary/40 px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-primary/10 sm:px-7 sm:py-3.5">
+            <a href="#contact" className="min-w-[9rem] flex-1 rounded-full border border-primary/40 px-5 py-3 text-center text-sm font-semibold text-foreground transition hover:bg-primary/10 sm:px-7 sm:py-3.5">
               Open Terminal
             </a>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="mt-10 grid max-w-md grid-cols-3 gap-3 sm:mt-12 sm:gap-4">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="mt-8 grid max-w-md grid-cols-3 gap-2 sm:mt-12 sm:gap-4">
             {[
               { k: "Projects", v: "20+" },
               { k: "Stacks", v: "12" },
               { k: "Coffee", v: "∞" },
             ].map((s) => (
-              <div key={s.k} className="glass rounded-lg px-3 py-3 text-center">
-                <div className="font-[Syne] text-2xl font-bold text-foreground">{s.v}</div>
+              <div key={s.k} className="glass rounded-lg px-2 py-3 text-center">
+                <div className="font-[Syne] text-xl font-bold text-foreground sm:text-2xl">{s.v}</div>
                 <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{s.k}</div>
               </div>
             ))}
@@ -219,16 +228,16 @@ function Hero() {
           onMouseMove={onMove}
           onMouseLeave={() => { rx.set(0); ry.set(0); }}
           style={{ y: yChar, perspective: 1200 }}
-          className="relative flex items-center justify-center"
+          className="relative flex min-w-0 items-center justify-center"
         >
           <motion.div style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }} className="relative">
             <motion.div className="animate-pulse-glow absolute inset-6 -z-10 rounded-[2rem] bg-primary/40 blur-3xl" />
-            <div className="glass animate-float relative overflow-hidden rounded-[2rem] p-3">
+            <div className="glass animate-float relative overflow-hidden rounded-[1.5rem] p-2 sm:rounded-[2rem] sm:p-3">
               <img
                 src={heroCharacter.url}
                 alt="Yoshitha Abburi — futuristic developer command center"
                 width={1024} height={1024}
-                className="mx-auto h-auto w-full max-w-[380px] rounded-[1.5rem] object-cover sm:max-w-[460px] lg:max-w-[520px]"
+                className="mx-auto h-auto w-full max-w-[300px] rounded-[1.5rem] object-cover sm:max-w-[440px] lg:max-w-[520px]"
               />
               <div aria-hidden className="pointer-events-none absolute inset-3 rounded-[1.5rem] ring-1 ring-inset ring-primary/30" />
             </div>
@@ -251,7 +260,7 @@ function Hero() {
         </motion.div>
       </div>
 
-      <div className="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] tracking-[0.3em] text-muted-foreground">
+      <div className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 font-mono text-[10px] tracking-[0.3em] text-muted-foreground lg:block">
         SCROLL ↓ TO ENTER
       </div>
     </section>
@@ -260,12 +269,12 @@ function Hero() {
 
 function Section({ id, kicker, title, children }: { id: string; kicker: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:py-28">
+    <section id={id} className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 md:py-28">
       <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }}>
         <div className="mb-3 font-mono text-xs tracking-[0.3em] text-primary">// {kicker}</div>
-        <h2 className="max-w-3xl font-[Syne] text-3xl font-bold leading-tight sm:text-4xl md:text-6xl">{title}</h2>
+        <h2 className="max-w-3xl font-[Syne] text-[clamp(1.6rem,7.5vw,2rem)] font-bold leading-tight sm:text-4xl md:text-6xl">{title}</h2>
       </motion.div>
-      <div className="mt-10 sm:mt-14">{children}</div>
+      <div className="mt-8 sm:mt-14">{children}</div>
     </section>
   );
 }
@@ -290,14 +299,14 @@ function Vault() {
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: i * 0.08, duration: 0.5 }}
             whileHover={{ y: -6 }}
-            className="group glass relative overflow-hidden rounded-2xl p-6"
+            className="group glass relative overflow-hidden rounded-2xl p-5 sm:p-6"
           >
             <div className={`absolute -right-20 -top-20 h-60 w-60 rounded-full bg-gradient-to-br ${p.accent} opacity-60 blur-3xl transition group-hover:opacity-100`} />
             <div className="relative">
               <div className="font-mono text-[10px] tracking-[0.25em] text-primary">{p.tag}</div>
-              <h3 className="mt-3 font-[Syne] text-3xl font-bold">{p.title}</h3>
+              <h3 className="mt-3 font-[Syne] text-2xl font-bold sm:text-3xl">{p.title}</h3>
               <p className="mt-3 max-w-md text-sm text-muted-foreground">{p.description}</p>
-              <div className="mt-8 flex items-center justify-between font-mono text-xs">
+              <div className="mt-6 flex items-center justify-between gap-2 font-mono text-[11px] sm:mt-8 sm:text-xs">
                 <span className="text-muted-foreground">0{i + 1} / 0{projects.length}</span>
                 <span className="text-primary transition group-hover:translate-x-1">view module →</span>
               </div>
@@ -323,7 +332,7 @@ function Lab() {
           <motion.div key={it.t}
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="glass relative overflow-hidden rounded-xl p-6"
+            className="glass relative overflow-hidden rounded-xl p-5 sm:p-6"
           >
             <div className="font-mono text-xs text-primary">0{i + 1}</div>
             <h3 className="mt-4 font-[Syne] text-xl font-semibold">{it.t}</h3>
@@ -348,14 +357,14 @@ function Arsenal() {
         <div className="flex overflow-hidden py-6">
           <div className="animate-marquee flex shrink-0 gap-3 pr-3">
             {[...stacks, ...stacks].map((s, i) => (
-              <span key={i} className="rounded-full border border-primary/30 bg-primary/5 px-5 py-2 font-mono text-sm text-foreground whitespace-nowrap">
+              <span key={i} className="rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 font-mono text-xs whitespace-nowrap text-foreground sm:px-5 sm:py-2 sm:text-sm">
                 {s}
               </span>
             ))}
           </div>
         </div>
       </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-3 sm:mt-10 sm:gap-4 md:grid-cols-3">
         {[
           { k: "Frontend", v: "React · Next · Motion" },
           { k: "Backend", v: "Node · Python · Postgres" },
@@ -387,14 +396,14 @@ function FutureMissions() {
             <motion.div key={m.t}
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`relative flex items-start gap-6 md:w-1/2 ${i % 2 ? "md:ml-auto md:pl-12" : "md:pr-12"}`}
+              className={`relative flex items-start gap-4 sm:gap-6 md:w-1/2 ${i % 2 ? "md:ml-auto md:pl-12" : "md:pr-12"}`}
             >
               <span className="relative z-10 mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-primary bg-background">
                 <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
               </span>
               <div className="glass flex-1 rounded-xl p-5">
                 <div className="font-mono text-xs text-primary">{m.y}</div>
-                <div className="mt-1 font-[Syne] text-xl">{m.t}</div>
+                <div className="mt-1 font-[Syne] text-lg sm:text-xl">{m.t}</div>
               </div>
             </motion.div>
           ))}
@@ -466,7 +475,7 @@ function Contact() {
                 <button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="inline-flex items-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)] disabled:opacity-60"
+                  className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-primary px-6 py-3 text-sm font-semibold sm:w-auto text-primary-foreground shadow-[0_0_30px_var(--primary)] transition hover:shadow-[0_0_60px_var(--primary)] disabled:opacity-60"
                 >
                   {mutation.isPending ? "transmitting…" : "transmit message →"}
                 </button>
@@ -483,12 +492,12 @@ function Contact() {
               { k: "LINKEDIN", v: "linkedin.com/in/yoshithaabburi", href: "https://www.linkedin.com/in/yoshithaabburi", icon: Linkedin },
               { k: "GITHUB", v: "github.com/yoshithaabburi", href: "https://github.com/yoshithaabburi", icon: Github },
             ].map((r) => (
-              <a key={r.k} href={r.href} target={r.href.startsWith("http") ? "_blank" : undefined} rel={r.href.startsWith("http") ? "noopener noreferrer" : undefined} className="glass group flex items-center justify-between gap-3 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary">
+              <a key={r.k} href={r.href} target={r.href.startsWith("http") ? "_blank" : undefined} rel={r.href.startsWith("http") ? "noopener noreferrer" : undefined} className="glass group flex flex-col gap-1 rounded-lg px-4 py-3 transition hover:border-primary/60 hover:text-primary sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                 <span className="flex items-center gap-2.5">
                   <r.icon size={16} className="text-muted-foreground transition group-hover:text-primary" />
                   <span className="shrink-0 text-[10px] tracking-widest text-muted-foreground sm:text-xs">{r.k}</span>
                 </span>
-                <span className="min-w-0 truncate text-right">{r.v}</span>
+                <span className="min-w-0 break-all text-left sm:truncate sm:text-right">{r.v}</span>
               </a>
             ))}
           </div>
@@ -505,15 +514,15 @@ function Footer() {
   ];
   return (
     <footer className="border-t border-primary/10 px-4 py-8 sm:px-6">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 font-mono text-[10px] tracking-widest text-muted-foreground md:flex-row">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center font-mono text-[10px] tracking-widest text-muted-foreground md:flex-row">
         <div>© {new Date().getFullYear()} YOSHITHA.ABBURI · ALL SIGNALS RESERVED</div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           {socials.map((s) => (
             <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="grid h-8 w-8 place-items-center rounded-full border border-primary/30 text-muted-foreground transition hover:border-primary hover:text-primary hover:shadow-[0_0_12px_var(--primary)]">
               <s.icon size={16} />
             </a>
           ))}
-          <div className="flex items-center gap-2 pl-2">
+          <div className="flex items-center gap-2 sm:pl-2">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
             SYSTEM STATUS: ONLINE
           </div>
@@ -564,7 +573,7 @@ function DevChat() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Open DEV assistant"
-        className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full border border-primary/50 bg-background/80 font-mono text-xs text-primary shadow-[0_0_30px_var(--primary)] backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
+        className="fixed bottom-4 right-4 z-50 grid h-12 w-12 sm:bottom-6 sm:right-6 sm:h-14 sm:w-14 place-items-center rounded-full border border-primary/50 bg-background/80 font-mono text-xs text-primary shadow-[0_0_30px_var(--primary)] backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
       >
         {open ? "×" : "DEV"}
       </button>
@@ -572,7 +581,7 @@ function DevChat() {
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          className="fixed bottom-24 right-6 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl border border-primary/30 bg-background/95 shadow-[0_0_40px_var(--primary)] backdrop-blur-xl"
+          className="fixed bottom-20 left-3 right-3 z-50 flex h-[min(28rem,70vh)] flex-col sm:bottom-24 sm:left-auto sm:right-6 sm:w-[22rem] overflow-hidden rounded-2xl border border-primary/30 bg-background/95 shadow-[0_0_40px_var(--primary)] backdrop-blur-xl"
         >
           <div className="flex items-center justify-between border-b border-primary/20 px-4 py-3">
             <div className="flex items-center gap-2">
