@@ -50,7 +50,7 @@ function Hero() {
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-[Syne] text-[clamp(2.25rem,8vw,4.8rem)] font-bold leading-tight"
+            className="whitespace-nowrap font-[Syne] text-[clamp(2.25rem,5.5vw,3.5rem)] font-bold leading-tight"
           >
             Yoshitha <span className="text-gradient">Abburi</span>
           </motion.h1>
