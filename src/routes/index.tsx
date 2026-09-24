@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { Linkedin, Github, Mail, Phone } from "lucide-react";
+import { Linkedin, Github, Mail, Phone, Moon, Sun } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import heroCharacter from "../assets/portfolio_image.jpeg.asset.json";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { listProjects, submitContact, chatWithDev, type ProjectRow } from "@/lib/portfolio.functions";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,15 +24,44 @@ export const Route = createFileRoute("/")({
 });
 
 function Nav() {
+  const [isLight, setIsLight] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem("portfolio-theme");
+    const light = savedTheme === "light";
+    setIsLight(light);
+    document.documentElement.classList.toggle("light", light);
+  }, []);
+
+  const toggleTheme = () => {
+    const light = !isLight;
+    setIsLight(light);
+    document.documentElement.classList.toggle("light", light);
+    window.localStorage.setItem("portfolio-theme", light ? "light" : "dark");
+  };
+
   return (
     <header className="fixed left-0 right-0 top-0 z-50 mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 sm:px-6 sm:py-5">
       <a href="#mission" className="flex min-w-0 items-center gap-2">
         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md border border-primary/40 bg-primary/10 font-mono text-sm text-primary">YA</span>
         <span className="truncate text-sm font-medium text-foreground sm:text-base">Yoshitha Abburi</span>
       </a>
-      <a href="#contact" className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)] sm:px-4 sm:text-xs">
-        Connect →
-      </a>
+      <div className="flex shrink-0 items-center gap-2">
+        <a href="#contact" className="shrink-0 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-[11px] font-medium text-primary transition hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_var(--primary)] sm:px-4 sm:text-xs">
+          Connect →
+        </a>
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          onClick={toggleTheme}
+          aria-label={isLight ? "Switch to dark mode" : "Switch to bright mode"}
+          title={isLight ? "Dark mode" : "Bright mode"}
+          className="h-9 w-9 shrink-0 rounded-full border-primary/40 bg-background/70 text-primary backdrop-blur hover:bg-primary hover:text-primary-foreground"
+        >
+          {isLight ? <Moon /> : <Sun />}
+        </Button>
+      </div>
     </header>
 
   );
